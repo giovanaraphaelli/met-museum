@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <div className="h-full flex flex-col justify-center items-center gap-4">
-      <h1 className="text-4xl lg:text-8xl font-bold">
+      <h1 className="text-4xl font-serif lg:text-8xl font-bold">
         Welcome to the
         <br />
         <span className="text-primary">MET</span> Museum
