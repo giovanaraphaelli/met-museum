@@ -18,7 +18,7 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full bg-background ">
       <nav className="container mx-auto flex items-center justify-between font-sans p-4">
-        <div className="text-lg font-bold text-primary leading-5">
+        <div className="text-lg font-bold font-serif text-primary leading-5">
           THE
           <br />
           MET
