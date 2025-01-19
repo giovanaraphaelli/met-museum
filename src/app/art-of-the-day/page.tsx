@@ -1,36 +1,11 @@
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-
-const API_BASE_URL = 'https://collectionapi.metmuseum.org/public/collection/v1';
-
-let cachedObjectIDs: number[] | null = null;
-let cacheTimestamp: number | null = null;
-const CACHE_DURATION = 60 * 60 * 1000;
-
-async function fetchObjectIDs() {
-  const now = Date.now();
-
-  if (
-    cachedObjectIDs &&
-    cacheTimestamp &&
-    now - cacheTimestamp < CACHE_DURATION
-  ) {
-    return cachedObjectIDs;
-  }
-
-  const response = await fetch(`${API_BASE_URL}/objects`);
-  const data = await response.json();
-
-  cachedObjectIDs = Array.isArray(data.objectIDs) ? data.objectIDs : [];
-  cacheTimestamp = now;
-
-  return cachedObjectIDs;
-}
+import { SquareArrowOutUpRight } from 'lucide-react';
+import { getArtOfTheDay } from '../actions/get-art-of-the-day';
+import Image from 'next/image';
 
 export default async function ArtOfTheDay() {
-  const objectIDs = await fetchObjectIDs();
+  const art = await getArtOfTheDay();
 
-  if (!objectIDs) {
+  if (!art) {
     return (
       <div className="h-full flex flex-col items-center justify-center gap-3">
         <h1 className="text-4xl lg:text-6xl font-serif font-bold">
@@ -43,19 +18,50 @@ export default async function ArtOfTheDay() {
     );
   }
 
-  const randomIndex = Math.floor(Math.random() * objectIDs.length);
-
   return (
-    <div className="h-full flex flex-col items-center justify-center gap-1">
-      <h1 className="text-4xl lg:text-6xl font-serif font-bold">
-        Art of the day
-      </h1>
-      <p className="font-sans text-xs lg:text-sm ">Discover new art today.</p>
-      <Button className="min-w-24 mt-4">
-        <Link href={`/art-of-the-day/${objectIDs[randomIndex]}`}>
-          {`Let's find`}
-        </Link>
-      </Button>
+    <div className="max-w-4xl h-full m-auto p-4 grid grid-cols-1 lg:grid-cols-2 gap-8 justify-center items-start">
+      <div className="flex gap-4 flex-col">
+        <h1 className="text-3xl font-bold font-serif">{art.title}</h1>
+        <h2 className="text-xl font-serif">
+          {art.artist} - {`(${art.object_date})`}
+        </h2>
+        {art.artist_bio && <p>{art.artist_bio}</p>}
+        <ul className="font-serif text-lg">
+          <li>
+            <strong>Medium:</strong> {art.medium}
+          </li>
+          <li>
+            <strong>Classification:</strong> {art.type}
+          </li>
+          <li>
+            <strong>Department:</strong> {art.department}
+          </li>
+        </ul>
+        {art.url && (
+          <a
+            className="flex gap-1 text-sm items-center text-primary font-sans"
+            href={art.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            See more <SquareArrowOutUpRight size={12} />
+          </a>
+        )}
+      </div>
+
+      <div className="p-6 bg-card flex justify-center items-center rounded min-h-64">
+        {art.image ? (
+          <Image
+            src={art.image}
+            alt={art.title || 'Artwork'}
+            width={300}
+            height={300}
+            className="w-auto h-auto"
+          />
+        ) : (
+          <p>No image available for this artwork.</p>
+        )}
+      </div>
     </div>
   );
 }
