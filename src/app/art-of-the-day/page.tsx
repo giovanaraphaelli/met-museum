@@ -1,9 +1,12 @@
 import { SquareArrowOutUpRight } from 'lucide-react';
-import { getArtOfTheDay } from '../actions/get-art-of-the-day';
+
 import Image from 'next/image';
+import { fetchObjectIDs, getArtDetails } from '../actions/metMuseumAPI';
 
 export default async function ArtOfTheDay() {
-  const art = await getArtOfTheDay();
+  const objectIDs = await fetchObjectIDs();
+  const randomIndex = Math.floor(Math.random() * objectIDs.length);
+  const art = await getArtDetails(objectIDs[randomIndex]);
 
   if (!art) {
     return (
@@ -39,7 +42,7 @@ export default async function ArtOfTheDay() {
         </ul>
         {art.url && (
           <a
-            className="flex gap-1 text-sm items-center text-primary font-sans"
+            className="flex gap-1 text-sm items-center text-primary font-sans w-24 p-1"
             href={art.url}
             target="_blank"
             rel="noopener noreferrer"
