@@ -8,6 +8,7 @@ import Link from 'next/link';
 const links = [
   { title: 'Home', href: '/' },
   { title: 'Art of the day', href: '/art-of-the-day' },
+  { title: 'Search', href: '/search' },
 ];
 
 export function Navbar() {
