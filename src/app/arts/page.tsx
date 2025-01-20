@@ -3,7 +3,7 @@ import { Art } from './art';
 import { Search } from './search';
 import { Loading } from '@/components/loading';
 import { DepartmentsSearch } from './search-departments';
-import { DepartmentsResponse, getDepartmentsIds } from '../lib/metMuseumAPI';
+import { DepartmentsResponse, getDepartments } from '../../lib/metMuseumAPI';
 
 export default async function ArtsPage(props: {
   searchParams?: Promise<{
@@ -14,7 +14,7 @@ export default async function ArtsPage(props: {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || '';
 
-  const { departments }: DepartmentsResponse = await getDepartmentsIds();
+  const { departments }: DepartmentsResponse = await getDepartments();
 
   return (
     <div className="max-w-4xl m-auto rounded flex flex-col gap-1 md:gap-4 p-4">

@@ -1,7 +1,7 @@
 import { SquareArrowOutUpRight } from 'lucide-react';
 
 import Image from 'next/image';
-import { getAvailableIDs, getArtDetails } from '../lib/metMuseumAPI';
+import { getAvailableIDs, getArtDetails } from '../../lib/metMuseumAPI';
 
 export default async function ArtOfTheDay() {
   const objectIDs = await getAvailableIDs();
@@ -22,34 +22,46 @@ export default async function ArtOfTheDay() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-150px)] max-w-4xl m-auto p-4 grid grid-cols-1 lg:grid-cols-2 gap-8 justify-center items-center">
+    <div className="min-h-[calc(100vh-150px)] max-w-4xl m-auto p-4 grid grid-cols-1 lg:grid-cols-2 gap-6 justify-center items-center">
       <div className="flex gap-4 flex-col">
         <h1 className="text-3xl font-bold font-serif">{art.title}</h1>
-        <h2 className="text-xl font-serif">
-          {art.artist} - {`(${art.object_date})`}
-        </h2>
-        {art.artist_bio && <p>{art.artist_bio}</p>}
-        <ul className="font-serif text-lg">
+        <div>
+          <h2 className="text-xl font-sans font-semibold">
+            {art.artist} - {`(${art.object_date})`}
+          </h2>
+
+          <p className="font-sans text-lg font-medium">
+            {art.artist_bio && <span>{art.artist_bio}</span>}
+          </p>
+        </div>
+
+        <ul className="font-sans text-lg">
           <li>
-            <strong>Medium:</strong> {art.medium}
+            <strong className="font-medium">Medium: </strong>
+            {art.medium}
           </li>
           <li>
-            <strong>Classification:</strong> {art.type}
+            <strong className="font-medium">Classification: </strong>
+            {art.type}
           </li>
           <li>
-            <strong>Department:</strong> {art.department}
+            <strong className="font-medium">Department: </strong>
+            {art.department}
+          </li>
+
+          <li>
+            <strong className="font-medium">Country:</strong> {art.country}
           </li>
         </ul>
-        {art.url && (
-          <a
-            className="flex gap-1 text-sm items-center text-primary font-sans w-24 p-1"
-            href={art.url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            See more <SquareArrowOutUpRight size={12} />
-          </a>
-        )}
+
+        <a
+          className="flex gap-1 text-sm items-center text-primary font-sans w-24 p-1"
+          href={art.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          See more <SquareArrowOutUpRight size={12} />
+        </a>
       </div>
 
       <div className="p-6 bg-card flex justify-center items-center rounded min-h-64">

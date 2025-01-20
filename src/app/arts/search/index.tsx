@@ -24,13 +24,13 @@ export function Search() {
 
   return (
     <form action={search} className="flex flex-row gap-2 justify-center mb-2">
-      <div className="relative w-full md:w-1/2 lg:w-1/3">
+      <div className="relative w-full">
         <Input
           type="text"
           name="query"
           placeholder="Search for art..."
           defaultValue={searchParams.get('query')?.toString()}
-          className="border p-2 rounded w-full pr-10"
+          className="border p-2 rounded w-full pr-10 font-sans"
         />
         <Link
           href="/arts"

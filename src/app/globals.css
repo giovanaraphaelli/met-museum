@@ -57,7 +57,7 @@
     @apply bg-background text-foreground;
   }
   ::-webkit-scrollbar {
-    @apply size-1;
+    @apply size-3;
   }
   ::-webkit-scrollbar-track {
     @apply bg-foreground/10 rounded-full;

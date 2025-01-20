@@ -6,7 +6,7 @@ export interface ObjectIDsResponse {
 export async function getAvailableIDs(): Promise<number[]> {
   const response = await fetch(`${API_BASE_URL}/objects`, {
     next: {
-      revalidate: 86400,
+      revalidate: 100,
     },
   });
 
@@ -28,16 +28,16 @@ export interface ArtworkDetails {
   medium: string;
   department: string;
   url: string;
+  country: string;
 }
 
 export async function getArtDetails(id: number): Promise<ArtworkDetails> {
   const response = await fetch(`${API_BASE_URL}/objects/${id}`, {
     next: {
-      revalidate: 86400,
+      revalidate: 100,
     },
   });
 
-  // if (!response.ok) throw new Error('Failed to fetch artworks details.');
   const data = await response.json();
 
   return {
@@ -50,7 +50,8 @@ export async function getArtDetails(id: number): Promise<ArtworkDetails> {
     type: data.objectName || 'Not specified',
     medium: data.medium || 'Not specified',
     department: data.department || 'Not specified',
-    url: data.objectURL,
+    country: data.country || 'Not specified',
+    url: data.objectURL || '',
   };
 }
 
@@ -82,7 +83,7 @@ export interface DepartmentsResponse {
   departments: Department[];
 }
 
-export async function getDepartmentsIds(): Promise<DepartmentsResponse> {
+export async function getDepartments(): Promise<DepartmentsResponse> {
   const response = await fetch(`${API_BASE_URL}/departments`, {
     cache: 'force-cache',
   });

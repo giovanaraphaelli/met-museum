@@ -3,7 +3,7 @@ import {
   ArtworkDetails,
   getArtDetails,
   searchArts,
-} from '@/app/lib/metMuseumAPI';
+} from '@/lib/metMuseumAPI';
 import { SquareArrowOutUpRight } from 'lucide-react';
 import Image from 'next/image';
 
@@ -41,24 +41,31 @@ export async function Art({ query }: { query: string }) {
           )}
 
           <div className="flex flex-col gap-2">
-            <h2 className="text-xl font-semibold">{art.title}</h2>
-            <ul className="font-serif text-sm font-semibold">
+            <h2 className="text-xl lg:text-2xl font-bold font-serif">
+              {art.title}
+            </h2>
+            <ul className="font-sans text-sm lg:text-base">
               <li>
-                <strong>Artist: </strong>
+                <strong className="font-medium">Artist: </strong>
                 {art.artist}
               </li>
               <li>
-                <strong>Date: </strong>
+                <strong className="font-medium">Date: </strong>
                 {art.object_date}
               </li>
               <li>
-                <strong>Medium:</strong> {art.medium}
+                <strong className="font-medium">Medium:</strong> {art.medium}
               </li>
               <li>
-                <strong>Classification:</strong> {art.type}
+                <strong className="font-medium">Classification:</strong>{' '}
+                {art.type}
               </li>
               <li>
-                <strong>Department:</strong> {art.department}
+                <strong className="font-medium">Department:</strong>{' '}
+                {art.department}
+              </li>
+              <li>
+                <strong className="font-medium">Country:</strong> {art.country}
               </li>
             </ul>
 

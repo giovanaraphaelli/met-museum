@@ -1,6 +1,6 @@
 'use client';
 
-import { Department } from '@/app/lib/metMuseumAPI';
+import { Department } from '@/lib/metMuseumAPI';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export function DepartmentsSearch({
