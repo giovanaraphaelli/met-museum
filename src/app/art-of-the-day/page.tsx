@@ -2,6 +2,8 @@ import { SquareArrowOutUpRight } from 'lucide-react';
 import Image from 'next/image';
 import { getAvailableIDs, getArtDetails } from '../../lib/metMuseumAPI';
 
+export const revalidate = 86400;
+
 export default async function ArtOfTheDay() {
   const objectIDs = await getAvailableIDs();
   const randomIndex = Math.floor(Math.random() * objectIDs.length);

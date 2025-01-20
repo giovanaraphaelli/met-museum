@@ -4,11 +4,7 @@ export interface ObjectIDsResponse {
   objectIDs: number[];
 }
 export async function getAvailableIDs(): Promise<number[]> {
-  const response = await fetch(`${API_BASE_URL}/objects`, {
-    next: {
-      revalidate: 100,
-    },
-  });
+  const response = await fetch(`${API_BASE_URL}/objects`);
 
   if (!response.ok) throw new Error('Failed to fetch artworks ids.');
 
@@ -32,11 +28,7 @@ export interface ArtworkDetails {
 }
 
 export async function getArtDetails(id: number): Promise<ArtworkDetails> {
-  const response = await fetch(`${API_BASE_URL}/objects/${id}`, {
-    next: {
-      revalidate: 100,
-    },
-  });
+  const response = await fetch(`${API_BASE_URL}/objects/${id}`);
 
   const data = await response.json();
 
