@@ -10,7 +10,7 @@ export default async function ArtOfTheDay() {
 
   if (!art) {
     return (
-      <div className="h-full flex flex-col items-center justify-center gap-3">
+      <div className="min-h-[calc(100vh-150px)] flex flex-col items-center justify-center gap-3">
         <h1 className="text-4xl lg:text-6xl font-serif font-bold">
           Art of the day
         </h1>
@@ -22,7 +22,7 @@ export default async function ArtOfTheDay() {
   }
 
   return (
-    <div className="max-w-4xl h-full m-auto p-4 grid grid-cols-1 lg:grid-cols-2 gap-8 justify-center items-start">
+    <div className="min-h-[calc(100vh-150px)] max-w-4xl m-auto p-4 grid grid-cols-1 lg:grid-cols-2 gap-8 justify-center items-center">
       <div className="flex gap-4 flex-col">
         <h1 className="text-3xl font-bold font-serif">{art.title}</h1>
         <h2 className="text-xl font-serif">

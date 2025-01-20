@@ -10,6 +10,8 @@ export async function fetchObjectIDs(): Promise<number[]> {
     },
   });
 
+  if (!response.ok) throw new Error('Failed to fetch artworks ids.');
+
   const data: ObjectIDsResponse = await response.json();
 
   return data.objectIDs;
@@ -34,6 +36,8 @@ export async function getArtDetails(id: number): Promise<ArtworkDetails> {
       revalidate: 86400,
     },
   });
+
+  // if (!response.ok) throw new Error('Failed to fetch artworks details.');
   const data = await response.json();
 
   return {
@@ -50,14 +54,12 @@ export async function getArtDetails(id: number): Promise<ArtworkDetails> {
   };
 }
 
-export interface ArtworkSearchResult {
+export interface ArtsSearchResult {
   total: number;
   objectIDs: number[] | null;
 }
 
-export async function searchArtworks(
-  query: string
-): Promise<ArtworkSearchResult> {
+export async function searchArts(query: string): Promise<ArtsSearchResult> {
   const response = await fetch(
     `${API_BASE_URL}/search?hasImages=true&q=${encodeURIComponent(query)}`
   );
@@ -66,7 +68,7 @@ export async function searchArtworks(
     throw new Error('Failed to fetch artworks.');
   }
 
-  const data: Promise<ArtworkSearchResult> = await response.json();
+  const data: Promise<ArtsSearchResult> = await response.json();
 
   return data;
 }

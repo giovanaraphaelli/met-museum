@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div className="h-full flex flex-col justify-center items-center gap-4">
+    <div className="h-[calc(100vh-150px)] flex flex-col justify-center items-center gap-4">
       <h1 className="text-4xl font-serif font-bold lg:text-8xl">
         Welcome to the
         <br />

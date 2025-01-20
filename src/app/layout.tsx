@@ -27,9 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${playfair.variable} ${jost.variable}  antialiased`}>
         <Navbar />
-        <main className="container mx-auto p-2 md:p-6 h-[calc(100vh-72px)]">
-          {children}
-        </main>
+        <main className="container mx-auto p-2 md:p-6 h-full">{children}</main>
       </body>
     </html>
   );
