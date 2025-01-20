@@ -61,7 +61,7 @@ export interface ArtsSearchResult {
 
 export async function searchArts(query: string): Promise<ArtsSearchResult> {
   const response = await fetch(
-    `${API_BASE_URL}/search?hasImages=true&q=${encodeURIComponent(query)}`
+    `${API_BASE_URL}/search?isHighlight=true&q=${encodeURIComponent(query)}`
   );
 
   if (!response.ok) {
@@ -69,6 +69,25 @@ export async function searchArts(query: string): Promise<ArtsSearchResult> {
   }
 
   const data: Promise<ArtsSearchResult> = await response.json();
+
+  return data;
+}
+
+export interface Department {
+  departmentId: number;
+  displayName: string;
+}
+
+export interface DepartmentsResponse {
+  departments: Department[];
+}
+
+export async function getDepartments(): Promise<DepartmentsResponse> {
+  const response = await fetch(`${API_BASE_URL}/departments`);
+
+  if (!response.ok) throw new Error('Failed to fetch artworks ids.');
+
+  const data: DepartmentsResponse = await response.json();
 
   return data;
 }

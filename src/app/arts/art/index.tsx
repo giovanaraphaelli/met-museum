@@ -51,6 +51,15 @@ export async function Art({ query }: { query: string }) {
                 <strong>Date: </strong>
                 {art.object_date}
               </li>
+              <li>
+                <strong>Medium:</strong> {art.medium}
+              </li>
+              <li>
+                <strong>Classification:</strong> {art.type}
+              </li>
+              <li>
+                <strong>Department:</strong> {art.department}
+              </li>
             </ul>
 
             {art.url && (
