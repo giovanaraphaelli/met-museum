@@ -3,7 +3,7 @@ import {
   ArtworkDetails,
   getArtDetails,
   searchArts,
-} from '@/app/actions/metMuseumAPI';
+} from '@/app/lib/metMuseumAPI';
 import { SquareArrowOutUpRight } from 'lucide-react';
 import Image from 'next/image';
 

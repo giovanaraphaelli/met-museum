@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Search as SearchIcon, X } from 'lucide-react';
+import Link from 'next/link';
 
 export function Search() {
   const searchParams = useSearchParams();
@@ -20,11 +21,6 @@ export function Search() {
     }
     replace(`${pathname}?${params.toString()}`);
   }
-  function clearSearch() {
-    const params = new URLSearchParams(searchParams);
-    params.delete('query');
-    replace(`${pathname}?${params.toString()}`); // Remove o parâmetro da URL
-  }
 
   return (
     <form action={search} className="flex flex-row gap-2 justify-center mb-2">
@@ -36,13 +32,12 @@ export function Search() {
           defaultValue={searchParams.get('query')?.toString()}
           className="border p-2 rounded w-full pr-10"
         />
-        <button
-          type="button"
-          onClick={clearSearch}
+        <Link
+          href="/arts"
           className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:bg-foreground/10 p-1 rounded"
         >
           <X size={16} />
-        </button>
+        </Link>
       </div>
       <Button type="submit" className="w-auto">
         <SearchIcon />

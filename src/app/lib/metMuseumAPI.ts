@@ -3,7 +3,7 @@ const API_BASE_URL = 'https://collectionapi.metmuseum.org/public/collection/v1';
 export interface ObjectIDsResponse {
   objectIDs: number[];
 }
-export async function fetchObjectIDs(): Promise<number[]> {
+export async function getAvailableIDs(): Promise<number[]> {
   const response = await fetch(`${API_BASE_URL}/objects`, {
     next: {
       revalidate: 86400,
@@ -82,8 +82,10 @@ export interface DepartmentsResponse {
   departments: Department[];
 }
 
-export async function getDepartments(): Promise<DepartmentsResponse> {
-  const response = await fetch(`${API_BASE_URL}/departments`);
+export async function getDepartmentsIds(): Promise<DepartmentsResponse> {
+  const response = await fetch(`${API_BASE_URL}/departments`, {
+    cache: 'force-cache',
+  });
 
   if (!response.ok) throw new Error('Failed to fetch artworks ids.');
 
