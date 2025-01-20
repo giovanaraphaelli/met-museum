@@ -32,6 +32,7 @@ export async function Art({ query }: { query: string }) {
                 fill={true}
                 style={{ objectFit: 'cover', objectPosition: 'center' }}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                unoptimized={true}
               />
             </div>
           ) : (

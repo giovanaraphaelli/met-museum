@@ -1,5 +1,4 @@
 import { SquareArrowOutUpRight } from 'lucide-react';
-
 import Image from 'next/image';
 import { getAvailableIDs, getArtDetails } from '../../lib/metMuseumAPI';
 
@@ -72,6 +71,8 @@ export default async function ArtOfTheDay() {
             width={300}
             height={300}
             className="w-auto h-auto"
+            priority
+            unoptimized={true}
           />
         ) : (
           <p>No image available for this artwork.</p>
