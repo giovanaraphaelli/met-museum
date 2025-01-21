@@ -13,7 +13,7 @@ export async function getAvailableIDs(): Promise<number[]> {
   return data.objectIDs;
 }
 
-export interface ArtworkDetails {
+export interface IArt {
   id: number;
   title: string;
   image: string;
@@ -27,7 +27,7 @@ export interface ArtworkDetails {
   country: string;
 }
 
-export async function getArtDetails(id: number): Promise<ArtworkDetails> {
+export async function getArtDetails(id: number): Promise<IArt> {
   const response = await fetch(`${API_BASE_URL}/objects/${id}`);
 
   const data = await response.json();
@@ -48,11 +48,16 @@ export async function getArtDetails(id: number): Promise<ArtworkDetails> {
 }
 
 export interface ArtsSearchResult {
-  total: number;
   objectIDs: number[] | null;
+  endIndex: number;
+  startIndex: number;
+  totalPages: number;
 }
 
-export async function searchArts(query: string): Promise<ArtsSearchResult> {
+export async function searchArts(
+  query: string,
+  currentPage: number
+): Promise<ArtsSearchResult> {
   const response = await fetch(
     `${API_BASE_URL}/search?isHighlight=true&q=${encodeURIComponent(query)}`
   );
@@ -61,18 +66,24 @@ export async function searchArts(query: string): Promise<ArtsSearchResult> {
     throw new Error('Failed to fetch artworks.');
   }
 
-  const data: Promise<ArtsSearchResult> = await response.json();
+  const data: Promise<{ total: number; objectIDs: number[] }> =
+    await response.json();
+  const { objectIDs, total } = await data;
 
-  return data;
+  const startIndex = (currentPage - 1) * 10;
+  const endIndex = startIndex + 10;
+  const totalPages = Math.ceil(total / 10);
+
+  return { startIndex, endIndex, objectIDs, totalPages };
 }
 
-export interface Department {
+export interface IDepartment {
   departmentId: number;
   displayName: string;
 }
 
 export interface DepartmentsResponse {
-  departments: Department[];
+  departments: IDepartment[];
 }
 
 export async function getDepartments(): Promise<DepartmentsResponse> {

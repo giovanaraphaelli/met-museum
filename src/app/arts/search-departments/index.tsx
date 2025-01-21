@@ -1,6 +1,6 @@
 'use client';
 
-import { Department } from '@/lib/metMuseumAPI';
+import { IDepartment } from '@/lib/metMuseumAPI';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export function DepartmentsSearch({
@@ -8,20 +8,21 @@ export function DepartmentsSearch({
   departments,
 }: {
   query: string;
-  departments: Department[];
+  departments: IDepartment[];
 }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  function handleSearch(departmentId: string) {
+  function handleSearch(departmentName: string) {
     const params = new URLSearchParams(searchParams);
 
-    if (departmentId) {
-      params.set('query', departmentId.toString());
+    if (departmentName) {
+      params.set('query', departmentName.toString());
     } else {
       params.delete('query');
     }
+    params.set('page', '1');
     replace(`${pathname}?${params.toString()}`);
   }
 

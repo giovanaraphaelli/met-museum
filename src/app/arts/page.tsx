@@ -1,9 +1,17 @@
+import { Loading } from '@/components/loading';
 import { Suspense } from 'react';
+import {
+  ArtsSearchResult,
+  IArt,
+  DepartmentsResponse,
+  getArtDetails,
+  getDepartments,
+  searchArts,
+} from '../../lib/metMuseumAPI';
 import { Art } from './art';
 import { Search } from './search';
-import { Loading } from '@/components/loading';
 import { DepartmentsSearch } from './search-departments';
-import { DepartmentsResponse, getDepartments } from '../../lib/metMuseumAPI';
+import PaginationArts from './pagination';
 
 export default async function ArtsPage(props: {
   searchParams?: Promise<{
@@ -13,6 +21,18 @@ export default async function ArtsPage(props: {
 }) {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || '';
+  const page = Number(searchParams?.page) || 1;
+
+  const { objectIDs, endIndex, startIndex, totalPages }: ArtsSearchResult =
+    await searchArts(query, page);
+
+  const arts: IArt[] | null = objectIDs
+    ? await Promise.all(
+        objectIDs
+          .slice(startIndex, endIndex)
+          .map(async (id) => getArtDetails(id))
+      )
+    : null;
 
   const { departments }: DepartmentsResponse = await getDepartments();
 
@@ -24,7 +44,10 @@ export default async function ArtsPage(props: {
       <Search />
       <Suspense fallback={<Loading />} key={query}>
         <DepartmentsSearch query={query} departments={departments} />
-        <Art query={query} />
+        {arts?.map((art) => (
+          <Art art={art} key={art.id} />
+        ))}
+        <PaginationArts totalPages={totalPages} />
       </Suspense>
     </div>
   );
