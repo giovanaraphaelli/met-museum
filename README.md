@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MET Museum
 
-## Getting Started
+Projeto experimental desenvolvido para estudo e prática de Next.js 13+, integrando a API pública do The Metropolitan Museum of Art.
 
-First, run the development server:
+![Resultado final do projeto](./public/met-museum.gif)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<h4 align="center"><a target="_blank" href="https://met-museum.giovanaraphaelli.tech">Clique para visitar o projeto</a></h4>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ Funcionalidades
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Art of the Day**: Exibe uma obra de arte aleatória do acervo do museu, acompanhada de um carrossel com as imagens disponíveis da obra.
+- **Pesquisa**: Permite buscar por obras de arte utilizando palavras-chave específicas.
+- **Listagem por Departamento**: Lista as obras de arte disponíveis em cada departamento.
+- **Detalhes de Obras**: Exibe informações detalhadas de cada obra, incluindo descrição, autor, data e materiais utilizados.
+- **Paginação**: Navegação otimizada entre as páginas de resultados.
+- **Carregamento Inteligente**: Utilização de SSR, SSG e Suspense para melhorar o desempenho e a experiência do usuário.
+- **Responsividade**: Layout adaptável para diferentes tamanhos de tela.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📚 Aprendizados
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Durante o desenvolvimento deste projeto, pude explorar alguns conceitos:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Server Components e Client Components**: Compreensão para otimização de desempenho.
+- **Rotas Dinâmicas**: Configuração e gerenciamento de parâmetros dinâmicos na URL.
+- **Fetch e Cache**: Uso de APIs REST e técnicas de caching para otimização.
+- **Form Action**: Implementação de ações baseadas em formulários para pesquisa e navegação.
+- **Gerenciamento de Estado e Navegação**: Utilização de hooks como `useSearchParams` e `useRouter`.
+- **SSR, SSG e Suspense**: Integração e uso de diferentes métodos de renderização para melhorar a experiência do usuário e o desempenho.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🚀 Tecnologias Utilizadas
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Next.js 15**: Framework React para construção de aplicações web modernas com suporte a Server-Side Rendering (SSR) e Static Site Generation (SSG).
+- **TypeScript**: Superset do JavaScript que adiciona tipagem estática, proporcionando maior confiabilidade no desenvolvimento.
+- **Tailwind CSS**: Framework CSS utilitário para criação de layouts responsivos e personalizados.
+- **ShadCN UI**: Conjunto de componentes estilizados e acessíveis, integrando Radix e Tailwind.
+
+---
+
+## 📝 Observações
+
+- Este projeto utiliza a API pública do <a href="https://metmuseum.github.io/#search" target="_blank">The Metropolitan Museum of Art</a> para acessar dados sobre as obras de arte.
+- Algumas limitações de dados podem ocorrer devido à natureza da API pública.
