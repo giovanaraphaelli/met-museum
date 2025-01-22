@@ -1,40 +1,33 @@
-import { Loading } from '@/components/loading';
 import { Suspense } from 'react';
 import {
-  ArtsSearchResult,
-  IArt,
   DepartmentsResponse,
-  getArtDetails,
-  getDepartments,
-  searchArts,
+  getAvailableDepartments,
 } from '../../lib/metMuseumAPI';
-import { Art } from './art';
+
+import { LoadingComponent } from '@/components/loading';
 import { Search } from './search';
 import { DepartmentsSearch } from './search-departments';
-import PaginationArts from './pagination';
+import ArtWrapper from './art-wrapper';
 
 export default async function ArtsPage(props: {
   searchParams?: Promise<{
     query?: string;
     page?: string;
+    department?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || '';
+  const department = searchParams?.department || '';
   const page = Number(searchParams?.page) || 1;
+  const key = `${query}-${department}-${page}`;
 
-  const { objectIDs, endIndex, startIndex, totalPages }: ArtsSearchResult =
-    await searchArts(query, page);
+  const { departments: availableDepartments }: DepartmentsResponse =
+    await getAvailableDepartments();
 
-  const arts: IArt[] | null = objectIDs
-    ? await Promise.all(
-        objectIDs
-          .slice(startIndex, endIndex)
-          .map(async (id) => getArtDetails(id))
-      )
-    : null;
-
-  const { departments }: DepartmentsResponse = await getDepartments();
+  const departmentActive = availableDepartments.find(
+    (dept) => dept.displayName === department
+  );
 
   return (
     <div className="max-w-4xl m-auto rounded flex flex-col gap-1 md:gap-4 p-4">
@@ -42,12 +35,17 @@ export default async function ArtsPage(props: {
         Search for Artworks
       </h1>
       <Search />
-      <Suspense fallback={<Loading />} key={query}>
-        <DepartmentsSearch query={query} departments={departments} />
-        {arts?.map((art) => (
-          <Art art={art} key={art.id} />
-        ))}
-        <PaginationArts totalPages={totalPages} />
+      <DepartmentsSearch
+        availableDepartments={availableDepartments}
+        isHidden={query === '' && department === ''}
+      />
+      <Suspense fallback={<LoadingComponent />} key={key}>
+        <ArtWrapper
+          query={query}
+          page={page}
+          departmentId={departmentActive?.departmentId}
+          departmentName={department}
+        />
       </Suspense>
     </div>
   );

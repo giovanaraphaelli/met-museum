@@ -13,6 +13,26 @@ export async function getAvailableIDs(): Promise<number[]> {
   return data.objectIDs;
 }
 
+export interface IDepartment {
+  departmentId: number;
+  displayName: string;
+}
+export interface DepartmentsResponse {
+  departments: IDepartment[];
+}
+
+export async function getAvailableDepartments(): Promise<DepartmentsResponse> {
+  const response = await fetch(`${API_BASE_URL}/departments`, {
+    cache: 'force-cache',
+  });
+
+  if (!response.ok) throw new Error('Failed to fetch artworks ids.');
+
+  const data: DepartmentsResponse = await response.json();
+
+  return data;
+}
+
 export interface IArt {
   id: number;
   title: string;
@@ -59,7 +79,8 @@ export async function searchArts(
   currentPage: number
 ): Promise<ArtsSearchResult> {
   const response = await fetch(
-    `${API_BASE_URL}/search?isHighlight=true&q=${encodeURIComponent(query)}`
+    `${API_BASE_URL}/search?isHighlight=true&q=${encodeURIComponent(query)}`,
+    { cache: 'force-cache' }
   );
 
   if (!response.ok) {
@@ -77,23 +98,25 @@ export async function searchArts(
   return { startIndex, endIndex, objectIDs, totalPages };
 }
 
-export interface IDepartment {
-  departmentId: number;
-  displayName: string;
-}
+export async function searchDepartments(
+  id: number,
+  currentPage: number
+): Promise<ArtsSearchResult> {
+  const response = await fetch(
+    `${API_BASE_URL}/objects?departmentIds=${id}&isHighlight=true`
+  );
 
-export interface DepartmentsResponse {
-  departments: IDepartment[];
-}
+  if (!response.ok) {
+    throw new Error('Failed to fetch artworks.');
+  }
 
-export async function getDepartments(): Promise<DepartmentsResponse> {
-  const response = await fetch(`${API_BASE_URL}/departments`, {
-    cache: 'force-cache',
-  });
+  const data: Promise<{ total: number; objectIDs: number[] }> =
+    await response.json();
+  const { objectIDs, total } = await data;
 
-  if (!response.ok) throw new Error('Failed to fetch artworks ids.');
+  const startIndex = (currentPage - 1) * 10;
+  const endIndex = startIndex + 10;
+  const totalPages = Math.ceil(total / 10);
 
-  const data: DepartmentsResponse = await response.json();
-
-  return data;
+  return { startIndex, endIndex, objectIDs, totalPages };
 }

@@ -14,10 +14,18 @@ export function Search() {
   function search(formData: FormData) {
     const params = new URLSearchParams(searchParams);
     const query = formData.get('query') as string;
+    const department = formData.get('department') as string;
+
     if (query) {
       params.set('query', query);
     } else {
       params.delete('query');
+    }
+
+    if (department) {
+      params.set('department', department);
+    } else {
+      params.delete('department');
     }
     params.set('page', '1');
     replace(`${pathname}?${params.toString()}`);
@@ -30,7 +38,11 @@ export function Search() {
           type="text"
           name="query"
           placeholder="Search for art..."
-          defaultValue={searchParams.get('query')?.toString()}
+          defaultValue={
+            searchParams.get('query')?.toString()
+              ? searchParams.get('query')?.toString()
+              : searchParams.get('department')?.toString()
+          }
           className="border p-2 rounded w-full pr-10 font-sans"
         />
         <Link
