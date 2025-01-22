@@ -4,26 +4,31 @@ import Image from 'next/image';
 
 export async function Art({ art }: { art: IArt }) {
   return (
-    <div className="flex flex-col md:flex-row gap-4 border-b border-secondary py-4">
+    <div className="flex flex-col md:flex-row gap-4 border-b border-secondary py-4 items-start">
+      {/* Imagem */}
       {art.image ? (
-        <div className="w-full md:w-60 h-60 relative">
+        <div className="w-full md:w-60 h-60 relative bg-card rounded flex-shrink-0">
           <Image
             src={art.image}
             alt={art.title || 'Artwork'}
-            priority
-            fill={true}
-            style={{ objectFit: 'cover', objectPosition: 'center' }}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            fill
+            style={{
+              objectFit: 'contain',
+              maxWidth: '100%',
+              maxHeight: '100%',
+            }}
             unoptimized={true}
+            priority={true}
           />
         </div>
       ) : (
-        <div className="h-60 w-240 bg-card text-xs flex justify-center items-center p-2">
+        <div className="w-full md:w-60 h-60 bg-card text-xs flex justify-center items-center p-2 rounded flex-shrink-0">
           <p>No image available for this artwork.</p>
         </div>
       )}
 
-      <div className="flex flex-col gap-2">
+      {/* Informações */}
+      <div className="flex flex-col gap-2 flex-grow">
         <h2 className="text-xl lg:text-2xl font-bold font-serif">
           {art.title}
         </h2>
@@ -51,6 +56,7 @@ export async function Art({ art }: { art: IArt }) {
           </li>
         </ul>
 
+        {/* Link para mais informações */}
         {art.url && (
           <a
             className="flex gap-1 text-sm items-center text-primary font-sans w-max p-1 mt-2"

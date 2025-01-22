@@ -1,6 +1,6 @@
 import { SquareArrowOutUpRight } from 'lucide-react';
-import Image from 'next/image';
-import { getAvailableIDs, getArtDetails } from '../../lib/metMuseumAPI';
+import { getArtDetails, getAvailableIDs } from '../../lib/metMuseumAPI';
+import { ImgCarousel } from './img-carousel';
 
 export const revalidate = 86400;
 
@@ -22,8 +22,19 @@ export default async function ArtOfTheDay() {
     );
   }
 
+  const images = [art.image, ...(art.additionalImages || [])].filter(Boolean);
+
   return (
-    <div className="min-h-[calc(100vh-150px)] max-w-4xl m-auto p-4 grid grid-cols-1 lg:grid-cols-2 gap-6 justify-center items-center">
+    <div className="min-h-[calc(100vh-150px)] m-auto p-4 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-20 justify-center items-center">
+      <div className="p-10 flex justify-center items-center rounded ">
+        {images.length > 0 ? (
+          <ImgCarousel imgs={images} />
+        ) : (
+          <p className="bg-card h-80 w-80 flex justify-center items-center rounded">
+            No image available for this artwork.
+          </p>
+        )}
+      </div>
       <div className="flex gap-4 flex-col">
         <h1 className="text-3xl font-bold font-serif">{art.title}</h1>
         <div>
@@ -63,22 +74,6 @@ export default async function ArtOfTheDay() {
         >
           See more <SquareArrowOutUpRight size={12} />
         </a>
-      </div>
-
-      <div className="p-6 bg-card flex justify-center items-center rounded min-h-64">
-        {art.image ? (
-          <Image
-            src={art.image}
-            alt={art.title || 'Artwork'}
-            width={300}
-            height={300}
-            className="w-auto h-auto"
-            priority
-            unoptimized={true}
-          />
-        ) : (
-          <p>No image available for this artwork.</p>
-        )}
       </div>
     </div>
   );

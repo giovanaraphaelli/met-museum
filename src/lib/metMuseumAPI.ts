@@ -37,6 +37,7 @@ export interface IArt {
   id: number;
   title: string;
   image: string;
+  additionalImages: string[] | [];
   artist: string;
   artist_bio: string | null;
   object_date: string;
@@ -56,6 +57,7 @@ export async function getArtDetails(id: number): Promise<IArt> {
     id: data.objectID,
     title: data.title || 'Untitled',
     image: data.primaryImageSmall,
+    additionalImages: data.additionalImages,
     artist: data.artistDisplayName || 'Unknown Artist',
     artist_bio: data.artistDisplayBio || null,
     object_date: data.objectDate || 'Date Unknown',

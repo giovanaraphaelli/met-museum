@@ -3,7 +3,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 export default function Loading() {
   return (
     <div className="min-h-[calc(100vh-150px)] flex justify-center items-center text-primary">
-      <div className="max-w-4xl h-full m-auto p-4 grid grid-cols-1 lg:grid-cols-2 gap-8 justify-center items-start">
+      <div className="max-w-4xl h-full m-auto p-4 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 justify-center items-center">
+        <Skeleton className="h-64 w-64 rounded" />
         <div className="flex gap-4 flex-col">
           <Skeleton className="h-8 w-3/4" />
           <Skeleton className="h-6 w-1/2" />
@@ -15,7 +16,6 @@ export default function Loading() {
           </ul>
           <Skeleton className="h-4 w-1/4" />
         </div>
-        <Skeleton className="h-64 w-64 rounded" />
       </div>
     </div>
   );
