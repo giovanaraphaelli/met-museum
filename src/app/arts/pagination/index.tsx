@@ -36,13 +36,13 @@ export default function PaginationArts({ totalPages }: { totalPages: number }) {
           }`}
           aria-disabled={page <= 1}
         >
-          <PaginationPrevious />
+          <PaginationPrevious aria-label="Go to the Previous Page" />
         </PaginationItem>
 
         {page > 1 && (
           <PaginationItem>
             <PaginationLink
-              aria-label={`Página ${page - 1}`}
+              aria-label={`Page ${page - 1}`}
               isActive={false}
               onClick={() => handlePageChange(page - 1)}
               className="cursor-pointer"
@@ -54,7 +54,7 @@ export default function PaginationArts({ totalPages }: { totalPages: number }) {
 
         <PaginationItem>
           <PaginationLink
-            aria-label={`Página atual, ${page}`}
+            aria-label={`Current page, ${page}`}
             isActive
             className="cursor-default"
           >
@@ -65,7 +65,7 @@ export default function PaginationArts({ totalPages }: { totalPages: number }) {
         {page < totalPages && (
           <PaginationItem>
             <PaginationLink
-              aria-label={`Página ${page + 1}`}
+              aria-label={`Page ${page + 1}`}
               isActive={false}
               onClick={() => handlePageChange(page + 1)}
               className="cursor-pointer"
@@ -84,7 +84,7 @@ export default function PaginationArts({ totalPages }: { totalPages: number }) {
           }`}
           aria-disabled={page >= totalPages}
         >
-          <PaginationNext />
+          <PaginationNext aria-label="Go to the Next Page" />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

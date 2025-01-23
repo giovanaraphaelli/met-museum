@@ -47,12 +47,13 @@ export function Search() {
         />
         <Link
           href="/arts"
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:bg-foreground/10 p-1 rounded"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:bg-foreground/10 p-1 rounded "
+          aria-label="Clear"
         >
           <X size={16} />
         </Link>
       </div>
-      <Button type="submit" className="w-auto">
+      <Button type="submit" className="w-auto" aria-label="Search">
         <SearchIcon />
       </Button>
     </form>
